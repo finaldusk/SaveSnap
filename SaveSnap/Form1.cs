@@ -89,6 +89,30 @@ namespace SaveSnap
             this.WindowState = FormWindowState.Normal;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int Rate = Convert.ToInt32(textBox1.Text);
+            timer1.Interval = Rate;
+        }
+
+        private void btnCutScreen_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            timer_cutscreen.Enabled = true;            
+        }
+
+        private void timer_cutscreen_Tick(object sender, EventArgs e)
+        {
+            SendKeys.Send("{prtsc}");
+            this.Visible = true;
+            timer_cutscreen.Enabled = false;
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+        }
 
         private bool ImageEquals(Bitmap bmpOne, Bitmap bmpTwo)
         {
