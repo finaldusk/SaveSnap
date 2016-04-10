@@ -13,6 +13,7 @@ namespace SaveSnap
     {
         Bitmap bmpOne, bmpTwo;
         bool firstTime=true;
+        
 
 
         public Form1()
@@ -85,7 +86,6 @@ namespace SaveSnap
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.Visible = true;
-
             this.WindowState = FormWindowState.Normal;
         }
 
@@ -93,18 +93,45 @@ namespace SaveSnap
         {
             int Rate = Convert.ToInt32(textBox1.Text);
             timer1.Interval = Rate;
+            timer2.Interval = Rate;
         }
 
         private void btnCutScreen_Click(object sender, EventArgs e)
         {
+            cutscreen();        
+        }
+
+        private void cutscreen()
+        {
             this.Visible = false;
-            timer_cutscreen.Enabled = true;            
+            timer_cutscreen.Enabled = true;
         }
 
         private void timer_cutscreen_Tick(object sender, EventArgs e)
         {
             SendKeys.Send("{prtsc}");
-            this.Visible = true;
+
+            /*
+            timer1.Enabled = false;
+
+            Graphics myGraphics = this.CreateGraphics();
+            Size s = Screen.PrimaryScreen.Bounds.Size;
+
+            Bitmap bmp = new Bitmap(s.Width, s.Height);
+            Graphics ScreenSnap = Graphics.FromImage(bmp);
+            ScreenSnap.CopyFromScreen(Point.Empty, Point.Empty, s);
+            ScreenSnap.Save();
+            Bitmap snap = new Bitmap(s.Width,s.Height, ScreenSnap);
+            ScreenSnap.Dispose();
+            MapToFile(snap);
+            bmpOne = snap;
+            bmpTwo = bmpOne;
+            Clipboard.SetDataObject(snap);
+            timer1.Enabled = true;
+            */
+
+
+            this.Visible = true;            
             timer_cutscreen.Enabled = false;
 
         }
@@ -112,6 +139,28 @@ namespace SaveSnap
         private void button2_Click(object sender, EventArgs e)
         {
             this.Visible = false;
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            timer2.Enabled = false;
+            timer1.Enabled = true;
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+            timer2.Enabled = true;
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            SendKeys.Send("{prtsc}");
+        }
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
         }
 
         private bool ImageEquals(Bitmap bmpOne, Bitmap bmpTwo)

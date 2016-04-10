@@ -44,6 +44,8 @@
             this.button3 = new System.Windows.Forms.Button();
             this.timer_cutscreen = new System.Windows.Forms.Timer(this.components);
             this.button2 = new System.Windows.Forms.Button();
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,13 +109,16 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(22, 260);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(71, 16);
             this.radioButton1.TabIndex = 5;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "监听模式";
+            this.toolTip1.SetToolTip(this.radioButton1, "不自动截图只监听剪贴板变化");
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
             // radioButton2
             // 
@@ -122,9 +127,10 @@
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(71, 16);
             this.radioButton2.TabIndex = 6;
-            this.radioButton2.TabStop = true;
             this.radioButton2.Text = "监控模式";
+            this.toolTip1.SetToolTip(this.radioButton2, "自动截图并保存不同的屏幕图像");
             this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // radioButton3
             // 
@@ -133,9 +139,9 @@
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(71, 16);
             this.radioButton3.TabIndex = 7;
-            this.radioButton3.TabStop = true;
             this.radioButton3.Text = "按键模式";
             this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.Visible = false;
             // 
             // btnCutScreen
             // 
@@ -144,16 +150,19 @@
             this.btnCutScreen.Size = new System.Drawing.Size(75, 23);
             this.btnCutScreen.TabIndex = 8;
             this.btnCutScreen.Text = "截屏";
+            this.toolTip1.SetToolTip(this.btnCutScreen, "立即截取一张不含本工具窗体的屏幕图像");
             this.btnCutScreen.UseVisualStyleBackColor = true;
             this.btnCutScreen.Click += new System.EventHandler(this.btnCutScreen_Click);
             // 
             // button3
             // 
+            this.button3.Enabled = false;
             this.button3.Location = new System.Drawing.Point(104, 288);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 9;
             this.button3.Text = "编辑截屏";
+            this.toolTip1.SetToolTip(this.button3, "开发中");
             this.button3.UseVisualStyleBackColor = true;
             // 
             // timer_cutscreen
@@ -168,8 +177,18 @@
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 10;
             this.button2.Text = "隐藏";
+            this.toolTip1.SetToolTip(this.button2, "隐藏到桌面托盘");
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // timer2
+            // 
+            this.timer2.Interval = 1000;
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
             // Form1
             // 
@@ -217,6 +236,8 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Timer timer_cutscreen;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
