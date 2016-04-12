@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace SaveSnap
 {
@@ -13,7 +14,11 @@ namespace SaveSnap
     {
         Bitmap bmpOne, bmpTwo;
         bool firstTime=true;
-        
+
+        [DllImport("user32")]
+        public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint control, Keys vk);
+        [DllImport("user32")]
+        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
 
         public Form1()
@@ -145,12 +150,14 @@ namespace SaveSnap
         {
             timer2.Enabled = false;
             timer1.Enabled = true;
+            UnregisterHotKey(this.Handle, 888);
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             timer1.Enabled = true;
             timer2.Enabled = true;
+            UnregisterHotKey(this.Handle, 888);
         }
 
         private void timer2_Tick(object sender, EventArgs e)
@@ -161,6 +168,11 @@ namespace SaveSnap
         private void toolTip1_Popup(object sender, PopupEventArgs e)
         {
 
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            RegisterHotKey(this.Handle, 888, 0, Keys.PrintScreen);
         }
 
         private bool ImageEquals(Bitmap bmpOne, Bitmap bmpTwo)
@@ -181,6 +193,27 @@ namespace SaveSnap
             {
                 return false;
             }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            UnregisterHotKey(this.Handle, 888);
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case 0x0312:    //这个是window消息定义的   注册的热键消息    
+                    if (m.WParam.ToString().Equals("888"))  //如果是我们注册的那个热键   
+                    {
+                        UnregisterHotKey(this.Handle, 888);
+                        SendKeys.Send("{prtsc}");
+                        RegisterHotKey(this.Handle, 888, 0, Keys.PrintScreen);
+                    }
+                    break;
+            }
+            base.WndProc(ref m);
         }
 
 

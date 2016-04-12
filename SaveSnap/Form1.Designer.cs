@@ -141,7 +141,7 @@
             this.radioButton3.TabIndex = 7;
             this.radioButton3.Text = "按键模式";
             this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.Visible = false;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
             // btnCutScreen
             // 
@@ -213,6 +213,7 @@
             this.ShowInTaskbar = false;
             this.Text = "磊哥截图";
             this.TopMost = true;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
